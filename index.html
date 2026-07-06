@@ -53,11 +53,10 @@ a{text-decoration:none;color:inherit}
 #nav.scrolled{padding:11px 56px}
 .nav-brand{display:flex;align-items:center;gap:13px}
 .nav-logo-img{
-  height:48px;width:auto;object-fit:contain;
+  height:56px;width:auto;object-fit:contain;
   transition:height .3s;
-  mix-blend-mode:multiply;
 }
-#nav.scrolled .nav-logo-img{height:38px}
+#nav.scrolled .nav-logo-img{height:44px}
 .nav-brand-text{display:flex;flex-direction:column;line-height:1}
 .nav-brand-name{font-family:var(--caps);font-size:.9rem;letter-spacing:.18em;color:var(--navy)}
 .nav-brand-sub{font-size:.58rem;letter-spacing:.32em;color:var(--muted);margin-top:4px;font-family:var(--sans);font-weight:300}
@@ -171,12 +170,11 @@ a{text-decoration:none;color:inherit}
   text-align:center;
 }
 .hero-logo-big{
-  width:280px !important;
+  width:320px !important;
   height:auto !important;
   object-fit:contain !important;
   display:block !important;
   filter:none !important;
-  mix-blend-mode:multiply;
   animation:logoPulse 5s ease-in-out infinite !important;
 }
 @keyframes logoPulse{
@@ -599,8 +597,7 @@ footer{
 /* Transparent logo in footer on dark bg — use invert instead of blend */
 footer .ft-logo-img {
   filter: brightness(0) invert(1) !important;
-  mix-blend-mode: normal !important;
-  opacity: .85 !important;
+  opacity: .8 !important;
 }
 footer .ft-certs img {
   filter: brightness(0) invert(1) !important;
@@ -616,10 +613,10 @@ footer .ft-certs img {
 <nav id="nav">
   <div class="nav-brand">
     <img class="nav-logo-img"
-      src="https://static.wixstatic.com/media/104b32_8babb213c8804b14accc8df5304c31a2~mv2.jpg"
+      src="simran_logo.png"
       alt="Simran Gems logo">
     <div class="nav-brand-text">
-      <span class="nav-brand-name">SIMRAN GEMS</span>
+      <span class="nav-brand-name" style="color:#1A3A8A;">SIMRAN GEMS</span>
       <span class="nav-brand-sub">HONG KONG · EST. 2014</span>
     </div>
   </div>
@@ -677,7 +674,7 @@ footer .ft-certs img {
     <!-- main logo -->
     <div class="hero-logo-centre">
       <img
-        src="https://static.wixstatic.com/media/104b32_8babb213c8804b14accc8df5304c31a2~mv2.jpg"
+        src="simran_logo.png"
         alt="Simran Gems Ltd"
         class="hero-logo-big">
       <p class="hero-logo-since">ESTABLISHED 2014 · HONG KONG</p>
@@ -709,7 +706,7 @@ footer .ft-certs img {
         </div>
         <div class="story-pair">
           <div class="story-sm">
-            <img src="img_story_cuts.jpg" alt="All diamond shapes – round princess marquise pear cushion radiant emerald heart">
+            <img src="img_story_cuts.jpg" alt="Fancy shaped diamonds – pear marquise radiant asscher heart trillion on white">
           </div>
           <div class="story-sm">
             <img src="img_story_raw.jpg" alt="Natural rough diamond crystal">
@@ -751,7 +748,7 @@ footer .ft-certs img {
     <!-- Certified -->
     <div id="tab-cert" class="prod-panel active">
       <div class="prod-card white-bg">
-        <img src="round_diamond.png" alt="Round Brilliant loose diamonds on white background">
+        <img src="img_round_color.jpg" alt="Diamond colour grading D to M – colourless to faint">
         <div class="prod-cert-badge">
           <img src="cert_gia.png" alt="GIA — Gemological Institute of America">
           <img src="cert_igi.png" alt="IGI — International Gemological Institute">
@@ -768,7 +765,7 @@ footer .ft-certs img {
         </div>
       </div>
       <div class="prod-card white-bg">
-        <img src="img_fancy_shapes.png" alt="Certified fancy shape diamonds – round princess emerald pear heart oval">
+        <img src="img_fancy_shapes.jpg" alt="Certified fancy shape loose diamonds – marquise princess cushion round">
         <div class="prod-cert-badge">
           <img src="cert_gia.png" alt="GIA — Gemological Institute of America">
           <img src="cert_gsi.png" alt="GSI — Gemological Science International">
@@ -978,7 +975,7 @@ footer .ft-certs img {
   <div class="ft-grid">
     <div class="ft-brand">
       <img class="ft-logo-img"
-        src="https://static.wixstatic.com/media/104b32_8babb213c8804b14accc8df5304c31a2~mv2.jpg"
+        src="simran_logo.png"
         alt="Simran Gems Ltd">
       <p>Premier diamond wholesaler supplying certified and non-certified loose diamonds across Asia since 2014.</p>
       <div class="ft-certs">
