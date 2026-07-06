@@ -55,7 +55,7 @@ a{text-decoration:none;color:inherit}
 .nav-brand-sub{font-size:.6rem;letter-spacing:.35em;color:var(--text-lt);margin-top:4px;font-family:var(--sans);font-weight:300}
 .nav-links{display:flex;gap:32px;list-style:none}
 .nav-links a{
-  font-family:var(--caps);font-size:.68rem;letter-spacing:.18em;
+  font-family:var(--caps);font-size:.88rem;letter-spacing:.14em;
   color:rgba(255,255,255,.7);position:relative;padding-bottom:4px;
   transition:color .25s;
 }
@@ -67,7 +67,7 @@ a{text-decoration:none;color:inherit}
 .nav-links a:hover{color:var(--white)}
 .nav-links a:hover::after{transform:scaleX(1)}
 .nav-cta{
-  font-family:var(--caps);font-size:.68rem;letter-spacing:.18em;
+  font-family:var(--caps);font-size:.85rem;letter-spacing:.14em;
   padding:10px 22px;border:1px solid var(--gold);color:var(--gold);
   transition:background .25s,color .25s;
 }
@@ -392,6 +392,70 @@ footer{
   .reveal{transition:none}
   .hero-diamond-gif{animation:none}
 }
+
+/* HERO-RIGHT logo panel */
+.hero-right-logo {
+  background: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+}
+.hero-right-logo img:not(.hero-diamond-gif):not(.hero-logo-big) {
+  position: static; width: auto; height: auto;
+  filter: none; object-fit: unset;
+}
+.hero-facet-bg {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  animation: rotateFacet 60s linear infinite;
+}
+@keyframes rotateFacet { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+.hero-logo-glow {
+  position: absolute; top: 50%; left: 50%;
+  width: 340px; height: 340px;
+  transform: translate(-50%,-50%);
+  background: radial-gradient(circle, rgba(196,145,58,.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-logo-centre {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 24px;
+  text-align: center;
+}
+.hero-logo-big {
+  width: 260px; height: auto; object-fit: contain;
+  filter: drop-shadow(0 0 60px rgba(196,145,58,.4)) brightness(1.08);
+  animation: logoPulse 4s ease-in-out infinite;
+}
+@keyframes logoPulse {
+  0%,100% { filter: drop-shadow(0 0 40px rgba(196,145,58,.35)) brightness(1.05); }
+  50%      { filter: drop-shadow(0 0 80px rgba(196,145,58,.55)) brightness(1.15); }
+}
+.hero-logo-since {
+  font-family: var(--caps); font-size: .65rem; letter-spacing: .38em;
+  color: var(--gold); opacity: .8;
+}
+
+/* ABOUT multi-diamond mosaic */
+.about-mosaic {
+  display: grid; grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr; gap: 4px;
+  height: 520px; overflow: hidden;
+}
+.mosaic-item { overflow: hidden; position: relative; }
+.mosaic-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform .6s ease;
+  animation: kenBurns 10s ease-in-out infinite alternate;
+}
+.mosaic-item:nth-child(2) img { animation-delay: 2s; }
+.mosaic-item:nth-child(3) img { animation-delay: 4s; }
+.mosaic-item:nth-child(4) img { animation-delay: 6s; }
+.mosaic-item:hover img { transform: scale(1.08); }
+@keyframes kenBurns {
+  from { transform: scale(1) translate(0,0); }
+  to   { transform: scale(1.07) translate(-1%,-1%); }
+}
+.mosaic-item:nth-child(1) { grid-column: 1; grid-row: 1 / span 2; }
+.mosaic-item-tall .mosaic-item:nth-child(1) { grid-row: 1 / span 2; }
+
 </style>
 </head>
 <body>
@@ -420,15 +484,6 @@ footer{
 <!-- HERO -->
 <section id="hero">
   <div class="hero-left">
-    <div class="hero-logo-wrap">
-      <img class="hero-logo-img"
-        src="https://static.wixstatic.com/media/104b32_8babb213c8804b14accc8df5304c31a2~mv2.jpg"
-        alt="Simran Gems Ltd">
-      <div class="hero-logo-text">
-        <span class="hero-logo-name">SIMRAN GEMS LTD</span>
-        <span class="hero-logo-sub">HONG KONG · EST. 2014</span>
-      </div>
-    </div>
     <p class="hero-eyebrow">Diamond Wholesalers, Hong Kong</p>
     <h1 class="hero-h1">Where Every<br>Facet Tells a<br><em>Story</em></h1>
     <div class="hero-rule"></div>
@@ -452,8 +507,30 @@ footer{
       </div>
     </div>
   </div>
-  <div class="hero-right">
-    <img src="https://images.unsplash.com/photo-1610464746328-f6f5657024f6?auto=format&fit=crop&w=1200&q=85" alt="Diamond close-up macro photography">
+  <div class="hero-right hero-right-logo">
+    <!-- facet SVG background pattern -->
+    <svg class="hero-facet-bg" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="250,30 470,160 470,340 250,470 30,340 30,160" fill="none" stroke="#C4913A" stroke-width="1.2" opacity=".25"/>
+      <polygon points="250,30 470,160 250,250 30,160" fill="none" stroke="#C4913A" stroke-width=".8" opacity=".2"/>
+      <polygon points="250,250 470,160 470,340 250,470 30,340 30,160" fill="none" stroke="#C4913A" stroke-width=".8" opacity=".2"/>
+      <polygon points="250,30 470,160 350,250 250,250 150,250 30,160" fill="none" stroke="#C4913A" stroke-width=".6" opacity=".15"/>
+      <line x1="250" y1="30" x2="250" y2="470" stroke="#C4913A" stroke-width=".5" opacity=".15"/>
+      <line x1="30" y1="160" x2="470" y2="340" stroke="#C4913A" stroke-width=".5" opacity=".12"/>
+      <line x1="470" y1="160" x2="30" y2="340" stroke="#C4913A" stroke-width=".5" opacity=".12"/>
+      <circle cx="250" cy="250" r="120" fill="none" stroke="#C4913A" stroke-width=".8" opacity=".1"/>
+      <circle cx="250" cy="250" r="80" fill="none" stroke="#C4913A" stroke-width=".6" opacity=".08"/>
+    </svg>
+    <!-- radial glow -->
+    <div class="hero-logo-glow"></div>
+    <!-- main logo -->
+    <div class="hero-logo-centre">
+      <img
+        src="https://static.wixstatic.com/media/104b32_8babb213c8804b14accc8df5304c31a2~mv2.jpg"
+        alt="Simran Gems Ltd"
+        class="hero-logo-big">
+      <p class="hero-logo-since">ESTABLISHED 2014 · HONG KONG</p>
+    </div>
+    <!-- floating diamond gif bottom right -->
     <img class="hero-diamond-gif"
       src="https://static.wixstatic.com/media/104b32_9332f561d6f346a6987e1e9bde524cf6.gif"
       alt="Rotating diamond">
@@ -474,13 +551,21 @@ footer{
 <section id="about">
   <div class="about-grid">
     <div class="about-img-col reveal">
-      <img class="about-img-main"
-        src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=800&q=85"
-        alt="Loose polished diamonds">
-      <img class="about-img-logo"
-        src="https://static.wixstatic.com/media/104b32_8babb213c8804b14accc8df5304c31a2~mv2.jpg"
-        alt="Simran Gems logo">
-      <div class="about-badge">
+      <div class="about-mosaic">
+        <div class="mosaic-item">
+          <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=600&q=85" alt="Loose round brilliant diamonds">
+        </div>
+        <div class="mosaic-item">
+          <img src="https://images.unsplash.com/photo-1615655406736-b37892a9eca6?auto=format&fit=crop&w=600&q=85" alt="Diamond ring close-up">
+        </div>
+        <div class="mosaic-item">
+          <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&q=85" alt="Certified loose diamonds">
+        </div>
+        <div class="mosaic-item">
+          <img src="https://images.unsplash.com/photo-1633810541658-8b4b80c02d2f?auto=format&fit=crop&w=600&q=85" alt="Diamond facets sparkle">
+        </div>
+      </div>
+      <div class="about-badge" style="bottom:-24px;left:-24px;position:absolute">
         <div class="bn">10+</div>
         <div class="bl">Years in<br>the Trade</div>
       </div>
@@ -515,7 +600,7 @@ footer{
     <!-- Certified -->
     <div id="tab-cert" class="prod-panel active">
       <div class="prod-card">
-        <img src="https://images.unsplash.com/photo-1515405295579-ba5a6c627e5a?auto=format&fit=crop&w=900&q=85" alt="Round Brilliant Diamond">
+        <img src="https://images.unsplash.com/photo-1609587312208-cea54be969e7?auto=format&fit=crop&w=900&q=85" alt="Round Brilliant Diamond">
         <div class="prod-cert-badge">
           <img src="https://static.wixstatic.com/media/104b32_f3f26dc530af4ca08ce73a0b88e252c7.png" alt="GIA">
           <img src="https://static.wixstatic.com/media/104b32_d03f05d8381d4982bfefcccaba813b06.png" alt="IGI">
@@ -532,7 +617,7 @@ footer{
         </div>
       </div>
       <div class="prod-card">
-        <img src="https://images.unsplash.com/photo-1573408301185-9519eb7f6041?auto=format&fit=crop&w=900&q=85" alt="Fancy Shape Diamonds">
+        <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=900&q=85" alt="Fancy Shape Diamonds">
         <div class="prod-cert-badge">
           <img src="https://static.wixstatic.com/media/104b32_f3f26dc530af4ca08ce73a0b88e252c7.png" alt="GIA">
           <img src="https://static.wixstatic.com/media/104b32_9635b09acf444ac7a73da8c3708d01b6.png" alt="HRD">
@@ -552,7 +637,7 @@ footer{
     <!-- Loose Parcels -->
     <div id="tab-loose" class="prod-panel">
       <div class="prod-card">
-        <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=900&q=85" alt="Round Polished Parcel">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=900&q=85" alt="Loose diamond parcel box">
         <div class="prod-body">
           <p class="prod-tag">Non-Certified Parcels</p>
           <h3 class="prod-title">Round Polished</h3>
@@ -564,7 +649,7 @@ footer{
         </div>
       </div>
       <div class="prod-card">
-        <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?auto=format&fit=crop&w=900&q=85" alt="Princess Cut Parcel">
+        <img src="https://images.unsplash.com/photo-1574018559578-c2e44e5d6e4e?auto=format&fit=crop&w=900&q=85" alt="Loose princess cut diamond parcel">
         <div class="prod-body">
           <p class="prod-tag">Non-Certified · Princess Specialist</p>
           <h3 class="prod-title">Fancy Shapes</h3>
