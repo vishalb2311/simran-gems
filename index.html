@@ -168,16 +168,18 @@ a{text-decoration:none;color:inherit}
   position:relative;z-index:2;
   display:flex;flex-direction:column;align-items:center;gap:20px;
   text-align:center;
-  margin-left:28px;
 }
 .hero-logo-big{
   width:154px !important;
+  max-width:70% !important;
   height:auto !important;
   object-fit:contain !important;
   display:block !important;
   filter:none !important;
   animation:logoPulse 5s ease-in-out infinite !important;
 }
+.hero-logo-centre{max-width:100%;overflow:visible;}
+.hero-right,.hero-right-logo{max-width:100%;}
 @keyframes logoPulse{
   0%,100%{filter:drop-shadow(0 4px 24px rgba(184,132,58,.18))}
   50%{filter:drop-shadow(0 8px 40px rgba(184,132,58,.32))}
@@ -488,6 +490,35 @@ img{transition:transform .4s ease, box-shadow .4s ease, filter .4s ease, opacity
 .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}
 
 /* ── RESPONSIVE ──────────────────────────────────────── */
+#nav-burger{
+  display:none;background:none;border:none;cursor:pointer;
+  width:32px;height:24px;flex-direction:column;justify-content:space-between;padding:0;
+}
+#nav-burger span{display:block;width:100%;height:2px;background:var(--navy);transition:transform .3s,opacity .3s}
+#nav-burger.open span:nth-child(1){transform:translateY(11px) rotate(45deg)}
+#nav-burger.open span:nth-child(2){opacity:0}
+#nav-burger.open span:nth-child(3){transform:translateY(-11px) rotate(-45deg)}
+#mobile-nav{
+  display:flex;position:fixed;top:0;right:0;bottom:0;width:min(78vw,320px);
+  background:var(--bg);z-index:300;flex-direction:column;
+  padding:100px 32px 40px;gap:6px;
+  box-shadow:-8px 0 32px rgba(0,0,0,.15);
+  transform:translateX(100%);transition:transform .35s ease;
+}
+#mobile-nav.open{transform:translateX(0)}
+#mobile-nav a{
+  font-family:var(--caps);font-size:.78rem;letter-spacing:.14em;
+  color:var(--ink);padding:14px 4px;border-bottom:1px solid var(--border);
+}
+#mobile-nav .mobile-nav-cta{
+  margin-top:18px;text-align:center;background:var(--gold);color:#fff;
+  border-bottom:none;padding:14px;
+}
+#nav-scrim{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:299;
+}
+#nav-scrim.open{display:block}
+
 @media(max-width:900px){
   #hero{grid-template-columns:1fr;padding-top:70px}
   .hero-right{height:55vw;position:relative;min-height:260px}
@@ -497,17 +528,50 @@ img{transition:transform .4s ease, box-shadow .4s ease, filter .4s ease, opacity
   .about-grid,.contact-wrap{grid-template-columns:1fr}
   .about-badge{bottom:-14px;left:14px}
   .prod-panel.active,.svc-grid{grid-template-columns:1fr}
+
+  /* Compact accordion cards on mobile: Services */
+  .svc-card{padding:20px 22px;cursor:pointer;}
+  .svc-card .svc-icon{display:inline-block;vertical-align:middle;margin:0 12px 0 0;width:28px;}
+  .svc-card .svc-icon svg{width:24px;height:24px;}
+  .svc-card .svc-title{display:inline-flex;align-items:center;margin:0;font-size:.92rem;position:relative;padding-right:26px;width:calc(100% - 40px);}
+  .svc-card .svc-title::after{
+    content:'+';position:absolute;right:0;top:50%;transform:translateY(-50%);
+    font-family:var(--sans);font-size:1.3rem;font-weight:300;color:var(--gold);transition:transform .3s;
+  }
+  .svc-card.expanded .svc-title::after{content:'−';}
+  .svc-card .svc-body{
+    max-height:0;overflow:hidden;opacity:0;
+    transition:max-height .35s ease,opacity .3s ease,margin-top .3s ease;
+    margin-top:0;font-size:.85rem;
+  }
+  .svc-card.expanded .svc-body{max-height:200px;opacity:1;margin-top:14px;}
   .fcs{grid-template-columns:1fr;border:none}
   .fcs-nav{display:flex;overflow-x:auto}
   .fc-btn{border-left:none;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0}
   .fc-btn.active{border-bottom-color:var(--gold);border-left:none}
   .fcs-content{padding:28px 20px}
   .fc-grid{grid-template-columns:1fr}
+
+  /* Compact accordion cards on mobile: 4Cs/5Cs detail items */
+  .fc-item{cursor:pointer;padding:14px 16px;}
+  .fc-item-label{position:relative;padding-right:24px;display:block;}
+  .fc-item-label::after{
+    content:'+';position:absolute;right:0;top:50%;transform:translateY(-50%);
+    font-family:var(--sans);font-size:1.2rem;font-weight:300;color:var(--gold);
+  }
+  .fc-item.expanded .fc-item-label::after{content:'−';}
+  .fc-item-desc{
+    max-height:0;overflow:hidden;opacity:0;
+    transition:max-height .35s ease,opacity .3s ease,margin-top .3s ease;
+    margin-top:0;
+  }
+  .fc-item.expanded .fc-item-desc{max-height:160px;opacity:1;margin-top:8px;}
   .ft-grid{grid-template-columns:1fr 1fr}
   .form-row{grid-template-columns:1fr}
   #nav{padding:14px 20px}
   #nav.scrolled{padding:10px 20px}
   .nav-links,.nav-cta{display:none}
+  #nav-burger{display:flex}
   .contact-form{padding:28px 20px}
   .cert-strip{gap:20px}
   .about-mosaic{height:380px}
@@ -598,7 +662,7 @@ footer .ft-certs img {
 
 <!-- NAV -->
 <nav id="nav">
-  <div class="nav-brand">
+  <a href="#hero" class="nav-brand" style="text-decoration:none;" aria-label="Simran Gems — back to top">
     <img class="nav-logo-img"
       src="simran_logo.png"
       alt="Simran Gems logo">
@@ -606,8 +670,9 @@ footer .ft-certs img {
       <span class="nav-brand-name" style="color:#1A3A8A;">SIMRAN GEMS</span>
       <span class="nav-brand-sub">HONG KONG · EST. 2014</span>
     </div>
-  </div>
+  </a>
   <ul class="nav-links">
+    <li><a href="#hero">Home</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#products">Products</a></li>
     <li><a href="#services">Services</a></li>
@@ -615,7 +680,20 @@ footer .ft-certs img {
     <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Enquire Now</a>
+  <button id="nav-burger" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div id="mobile-nav">
+  <a href="#hero">Home</a>
+  <a href="#about">About</a>
+  <a href="#products">Products</a>
+  <a href="#services">Services</a>
+  <a href="#knowledge">4Cs</a>
+  <a href="#contact">Contact</a>
+  <a href="#contact" class="mobile-nav-cta">Enquire Now</a>
+</div>
+<div id="nav-scrim"></div>
 
 <!-- HERO -->
 <section id="hero">
@@ -853,7 +931,7 @@ footer .ft-certs img {
   <div class="know-wrap">
     <div class="reveal">
       <p class="section-eyebrow">Education</p>
-      <h2 class="section-h2">Forget the Regular 4C's — We Provide <em>5 C's</em>, Much More</h2>
+      <h2 class="section-h2"><span style="font-size:.55em;font-family:var(--sans);font-weight:400;letter-spacing:.02em;color:var(--muted);">Forget the regular 4C's —</span> We Provide <em>5 C's</em></h2>
     </div>
     <div class="fcs reveal d1">
       <div class="fcs-nav">
@@ -1003,9 +1081,8 @@ footer .ft-certs img {
       <div class="fg"><label>Your Enquiry</label><textarea name="message" placeholder="Describe your requirements — shape, carat range, clarity, colour, quantity…" required></textarea></div>
       <button type="submit" class="form-btn">Send Enquiry</button>
       <p id="form-status" style="margin-top:14px;font-size:.85rem;min-height:1.2em;"></p>
+      <p style="margin-top:10px;font-size:.78rem;color:var(--muted);">Prefer email? Write to us directly at <a href="mailto:sales@simrangems.com" style="color:var(--gold-dk);text-decoration:underline;">sales@simrangems.com</a></p>
     </form>
-    <script>
-        </script>
   </div>
 </section>
 
@@ -1076,6 +1153,38 @@ document.querySelectorAll('.fc-btn').forEach(b=>b.addEventListener('click',()=>{
   b.classList.add('active');
   document.getElementById('fc-'+b.dataset.fc).classList.add('active');
 }));
+
+// Compact accordion cards (Services + 4Cs/5Cs detail items) — mobile only via CSS scope
+document.querySelectorAll('.svc-card').forEach(function(card){
+  card.addEventListener('click', function(){ card.classList.toggle('expanded'); });
+});
+document.querySelectorAll('.fc-item').forEach(function(item){
+  item.addEventListener('click', function(e){
+    e.stopPropagation();
+    item.classList.toggle('expanded');
+  });
+});
+
+// Mobile nav toggle
+(function(){
+  var burger=document.getElementById('nav-burger');
+  var panel=document.getElementById('mobile-nav');
+  var scrim=document.getElementById('nav-scrim');
+  if(!burger||!panel||!scrim) return;
+  function closeMenu(){
+    burger.classList.remove('open'); panel.classList.remove('open'); scrim.classList.remove('open');
+    burger.setAttribute('aria-expanded','false');
+  }
+  function openMenu(){
+    burger.classList.add('open'); panel.classList.add('open'); scrim.classList.add('open');
+    burger.setAttribute('aria-expanded','true');
+  }
+  burger.addEventListener('click', function(){
+    burger.classList.contains('open') ? closeMenu() : openMenu();
+  });
+  scrim.addEventListener('click', closeMenu);
+  panel.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+})();
 
 // Contact form thank-you (after FormSubmit redirect)
 if(location.search.indexOf('sent=1')!==-1){
