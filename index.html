@@ -108,8 +108,41 @@ a{text-decoration:none;color:inherit}
 }
 .hero-h1 em{font-style:italic;color:var(--gold)}
 .hero-rule{width:48px;height:2px;background:var(--gold);margin:26px 0}
+
+@keyframes heroFadeUp{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.hero-eyebrow,.hero-h1,.hero-rule,.hero-sub,.hero-actions,.hero-stats{
+  opacity:0;animation:heroFadeUp .8s ease forwards;
+}
+.hero-eyebrow{animation-delay:.1s}
+.hero-h1{animation-delay:.25s}
+.hero-rule{animation-delay:.5s}
+.hero-sub{animation-delay:.6s}
+.hero-actions{animation-delay:.75s}
+.hero-stats{animation-delay:.95s}
+
+/* Gold shimmer sweep on emphasised heading text */
+.hero-h1 em,.section-h2 em{
+  background:linear-gradient(90deg,var(--gold-dk) 0%,var(--gold-lt,var(--gold)) 25%,var(--gold-dk) 50%,var(--gold-lt,var(--gold)) 75%,var(--gold-dk) 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  animation:shimmerText 6s linear infinite;
+}
+@keyframes shimmerText{
+  0%{background-position:200% center}
+  100%{background-position:-200% center}
+}
 .hero-sub{font-size:1.1rem;line-height:1.88;color:var(--body);max-width:440px;font-weight:300}
 .hero-actions{display:flex;gap:14px;margin-top:40px;flex-wrap:wrap;justify-content:flex-end;}
+.btn-gold,.btn-outline{position:relative;overflow:hidden;}
+.btn-gold::after,.btn-outline::after{
+  content:'';position:absolute;top:0;left:-75%;width:50%;height:100%;
+  background:linear-gradient(120deg,transparent,rgba(255,255,255,.4),transparent);
+  transform:skewX(-20deg);transition:left .6s ease;
+}
+.btn-gold:hover::after,.btn-outline:hover::after{left:125%;}
 .btn-gold{
   font-family:var(--caps);font-size:.68rem;letter-spacing:.2em;
   padding:15px 30px;background:var(--gold);color:#fff;
@@ -122,7 +155,7 @@ a{text-decoration:none;color:inherit}
   background:transparent;
   transition:background .25s,color .25s;
 }
-.btn-outline:hover{background:var(--gold);color:#fff}
+.btn-outline:hover{background:var(--gold);color:#fff;transform:translateY(-2px)}
 .hero-stats{
   display:flex;gap:36px;margin-top:52px;padding-top:36px;
   border-top:1px solid var(--border);justify-content:flex-end;
@@ -182,7 +215,7 @@ a{text-decoration:none;color:inherit}
   filter:none !important;
   animation:logoPulse 5s ease-in-out infinite !important;
 }
-.hero-logo-centre{max-width:100%;overflow:visible;}
+.hero-logo-centre{max-width:100%;overflow:visible;transition:transform .35s ease-out;}
 .hero-right,.hero-right-logo{max-width:100%;}
 @keyframes logoPulse{
   0%,100%{filter:drop-shadow(0 4px 24px rgba(184,132,58,.18))}
@@ -310,12 +343,21 @@ a{text-decoration:none;color:inherit}
   border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:center;
 }
+@keyframes gentleFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
 .prod-card>.prod-img>img{
   width:100%;height:100%;
   object-fit:contain;
   padding:24px 28px;
   transition:transform .5s;
+  animation:gentleFloat 5s ease-in-out infinite;
 }
+.prod-card:nth-child(2)>.prod-img>img{animation-delay:.8s}
+.prod-card:nth-child(3)>.prod-img>img{animation-delay:1.6s}
+.prod-card:nth-child(4)>.prod-img>img{animation-delay:2.4s}
+.prod-card:hover>.prod-img>img{animation-play-state:paused;}
 .prod-card:hover>.prod-img>img{transform:scale(1.05)}
 /* CERT BADGES top-right of image area */
 .prod-cert-badge{
@@ -624,6 +666,11 @@ img{transition:transform .4s ease, box-shadow .4s ease, filter .4s ease, opacity
   .hero-logo-big{animation:none !important}
   .mosaic-item img{animation:none}
   .hero-facet-bg{animation:none !important}
+  .hero-eyebrow,.hero-h1,.hero-rule,.hero-sub,.hero-actions,.hero-stats{animation:none !important;opacity:1 !important;}
+  .hero-h1 em,.section-h2 em{animation:none !important;-webkit-text-fill-color:initial;color:var(--gold);background:none;}
+  .prod-card>.prod-img>img,.story-main img,.story-sm img{animation:none !important;}
+  .btn-gold::after,.btn-outline::after{display:none;}
+  .hero-logo-centre{transition:none !important;}
 }
 
 /* About section – jewelry image layout */
@@ -669,8 +716,9 @@ img{transition:transform .4s ease, box-shadow .4s ease, filter .4s ease, opacity
   background: #fff;
   padding: 16px;
   transition: transform .5s;
+  animation: gentleFloat 6s ease-in-out infinite;
 }
-.story-main:hover img { transform: scale(1.03); }
+.story-main:hover img { animation-play-state:paused; transform: scale(1.03); }
 .story-pair {
   grid-column: 2; grid-row: 1 / span 2;
   display: flex; flex-direction: column; gap: 6px;
@@ -684,8 +732,10 @@ img{transition:transform .4s ease, box-shadow .4s ease, filter .4s ease, opacity
   object-fit: contain;
   background: #fff; padding: 12px;
   transition: transform .5s;
+  animation: gentleFloat 5.5s ease-in-out infinite;
 }
-.story-sm:hover img { transform: scale(1.04); }
+.story-pair .story-sm:nth-child(2) img{animation-delay:1s}
+.story-sm:hover img { animation-play-state:paused; transform: scale(1.04); }
 
 /* Transparent logo in footer on dark bg — use invert instead of blend */
 footer .ft-logo-img {
@@ -754,15 +804,15 @@ footer .ft-certs img {
     </div>
     <div class="hero-stats">
       <div>
-        <div class="hero-stat-n">10+</div>
+        <div class="hero-stat-n" data-count-to="10" data-suffix="+">0</div>
         <div class="hero-stat-l">Years Experience</div>
       </div>
       <div>
-        <div class="hero-stat-n">500k</div>
+        <div class="hero-stat-n" data-count-to="500" data-suffix="k">0</div>
         <div class="hero-stat-l">Cts Sold</div>
       </div>
       <div>
-        <div class="hero-stat-n">3</div>
+        <div class="hero-stat-n" data-count-to="3" data-suffix="">0</div>
         <div class="hero-stat-l">Lab Certifications</div>
       </div>
     </div>
@@ -1205,6 +1255,45 @@ document.querySelectorAll('.fc-item').forEach(function(item){
 document.querySelectorAll('.about-pillar').forEach(function(item){
   item.addEventListener('click', function(){ item.classList.toggle('expanded'); });
 });
+
+// Animated count-up for hero stats (plays once, shortly after page load)
+(function(){
+  var nums = document.querySelectorAll('.hero-stat-n[data-count-to]');
+  if(!nums.length) return;
+  setTimeout(function(){
+    nums.forEach(function(el){
+      var target = parseFloat(el.dataset.countTo);
+      var suffix = el.dataset.suffix || '';
+      var duration = 1400;
+      var startTime = null;
+      function step(ts){
+        if(!startTime) startTime = ts;
+        var progress = Math.min((ts - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = Math.round(target * eased);
+        el.textContent = current + suffix;
+        if(progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
+  }, 900);
+})();
+
+// Subtle mouse-parallax tilt on hero logo
+(function(){
+  var stage = document.querySelector('.hero-right-logo');
+  var centre = document.querySelector('.hero-logo-centre');
+  if(!stage || !centre || window.matchMedia('(max-width:900px)').matches) return;
+  stage.addEventListener('mousemove', function(e){
+    var rect = stage.getBoundingClientRect();
+    var x = (e.clientX - rect.left) / rect.width - 0.5;
+    var y = (e.clientY - rect.top) / rect.height - 0.5;
+    centre.style.transform = 'translate('+(x*14)+'px,'+(y*14)+'px)';
+  });
+  stage.addEventListener('mouseleave', function(){
+    centre.style.transform = 'translate(0,0)';
+  });
+})();
 
 // Build mobile accordion for 4Cs/5Cs from existing tab content (no content duplication)
 (function(){
