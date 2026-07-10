@@ -524,9 +524,16 @@ img{transition:transform .4s ease, box-shadow .4s ease, filter .4s ease, opacity
 
 @media(max-width:900px){
   footer{display:none}
-  #hero{grid-template-columns:1fr;padding-top:70px}
-  .hero-right{height:55vw;position:relative;min-height:260px}
-  .hero-left{padding:60px 24px 60px}
+  #hero{grid-template-columns:1fr;padding-top:0;}
+  .hero-right{height:100vh;min-height:100vh;position:relative;width:100%;}
+  .hero-left{
+    padding:60px 24px 60px;width:100%;
+    align-items:flex-start;text-align:left;
+  }
+  .hero-eyebrow{justify-content:flex-start;}
+  .hero-actions{justify-content:flex-start;}
+  .hero-stats{justify-content:flex-start;}
+  .hero-stat-l{text-align:left;}
 
   .hero-logo-big{width:108px !important}
   .about-grid,.contact-wrap{grid-template-columns:1fr}
@@ -1092,10 +1099,9 @@ footer .ft-certs img {
         </div>
       </div>
     </div>
-    <form id="enquiry-form" class="contact-form reveal d1" action="https://formsubmit.co/vishalb2311@gmail.com" method="POST">
+    <form id="enquiry-form" class="contact-form reveal d1" action="https://formsubmit.co/vishalb2311@gmail.com" method="POST" target="hidden-form-frame">
       <input type="hidden" name="_subject" value="New Enquiry - Simran Gems Website">
       <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_next" value="https://vishalb2311.github.io/simran-gems/?sent=1#contact">
       <input type="hidden" name="_template" value="table">
       <div class="form-row">
         <div class="fg"><label>First Name</label><input type="text" name="name" placeholder="Your name" required></div>
@@ -1119,6 +1125,7 @@ footer .ft-certs img {
       <p id="form-status" style="margin-top:14px;font-size:.85rem;min-height:1.2em;"></p>
       <p style="margin-top:10px;font-size:.78rem;color:var(--muted);">Prefer email? Write to us directly at <a href="mailto:sales@simrangems.com" style="color:var(--gold-dk);text-decoration:underline;">sales@simrangems.com</a></p>
     </form>
+    <iframe name="hidden-form-frame" style="display:none" title="form submission target"></iframe>
   </div>
 </section>
 
@@ -1247,17 +1254,22 @@ document.querySelectorAll('.about-pillar').forEach(function(item){
   panel.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
 })();
 
-// Contact form thank-you (after FormSubmit redirect)
-if(location.search.indexOf('sent=1')!==-1){
+// Contact form — submits invisibly via hidden iframe, no page navigation, no error page ever shown
+(function(){
+  var form=document.getElementById('enquiry-form');
   var statusEl=document.getElementById('form-status');
-  if(statusEl){
+  if(!form||!statusEl) return;
+  form.addEventListener('submit', function(){
+    var btn=form.querySelector('.form-btn');
+    if(btn){ btn.disabled=true; }
     statusEl.style.color='#2e7d32';
     statusEl.textContent='Thank you — your enquiry has been sent. We will get back to you shortly.';
-  }
-  if(window.history&&window.history.replaceState){
-    window.history.replaceState(null,'',location.pathname+location.hash);
-  }
-}
+    setTimeout(function(){
+      form.reset();
+      if(btn){ btn.disabled=false; }
+    }, 600);
+  });
+})();
 
 // Scroll reveal
 const io=new IntersectionObserver(entries=>
