@@ -84,19 +84,21 @@ a{text-decoration:none;color:inherit}
 
 /* ── HERO ────────────────────────────────────────────── */
 #hero{
-  min-height:100vh;display:grid;grid-template-columns:54% 46%;
+  min-height:100vh;display:grid;grid-template-columns:46% 54%;
   position:relative;overflow:hidden;
   padding-top:80px;
 }
 .hero-left{
-  display:flex;flex-direction:column;justify-content:center;
-  padding:80px 64px 80px 56px;
+  display:flex;flex-direction:column;justify-content:center;align-items:flex-end;
+  padding:80px 56px 80px 64px;
   background:var(--bg-warm);position:relative;z-index:2;
+  order:2;text-align:right;
 }
+.hero-right{order:1;}
 .hero-eyebrow{
   font-family:var(--caps);font-size:.62rem;letter-spacing:.42em;
   color:var(--gold);margin-bottom:22px;
-  display:flex;align-items:center;gap:12px;
+  display:flex;align-items:center;gap:12px;justify-content:flex-end;
 }
 .hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--gold)}
 .hero-h1{
@@ -107,7 +109,7 @@ a{text-decoration:none;color:inherit}
 .hero-h1 em{font-style:italic;color:var(--gold)}
 .hero-rule{width:48px;height:2px;background:var(--gold);margin:26px 0}
 .hero-sub{font-size:1.1rem;line-height:1.88;color:var(--body);max-width:440px;font-weight:300}
-.hero-actions{display:flex;gap:14px;margin-top:40px;flex-wrap:wrap}
+.hero-actions{display:flex;gap:14px;margin-top:40px;flex-wrap:wrap;justify-content:flex-end;}
 .btn-gold{
   font-family:var(--caps);font-size:.68rem;letter-spacing:.2em;
   padding:15px 30px;background:var(--gold);color:#fff;
@@ -123,10 +125,10 @@ a{text-decoration:none;color:inherit}
 .btn-outline:hover{background:var(--gold);color:#fff}
 .hero-stats{
   display:flex;gap:36px;margin-top:52px;padding-top:36px;
-  border-top:1px solid var(--border);
+  border-top:1px solid var(--border);justify-content:flex-end;
 }
 .hero-stat-n{font-family:var(--serif);font-size:2.4rem;color:var(--gold);line-height:1}
-.hero-stat-l{font-family:var(--caps);font-size:.58rem;letter-spacing:.18em;color:var(--muted);margin-top:5px}
+.hero-stat-l{font-family:var(--caps);font-size:.58rem;letter-spacing:.18em;color:var(--muted);margin-top:5px;text-align:right;}
 
 /* Hero right — logo panel */
 .hero-right{
@@ -281,19 +283,13 @@ a{text-decoration:none;color:inherit}
 .products-wrap{max-width:1200px;margin:0 auto;padding:0 56px}
 .products-header{margin-bottom:52px}
 .products-header .section-h2{max-width:480px}
-.prod-tabs{
-  display:flex;gap:0;margin-bottom:40px;
+.prod-subheading{
+  font-family:var(--caps);font-size:.7rem;letter-spacing:.2em;
+  color:var(--gold);padding-bottom:12px;margin-bottom:28px;
   border-bottom:1.5px solid var(--border);
 }
-.prod-tab{
-  font-family:var(--caps);font-size:.68rem;letter-spacing:.18em;
-  padding:12px 24px;cursor:pointer;color:var(--muted);
-  border:none;border-bottom:2.5px solid transparent;margin-bottom:-1.5px;
-  background:none;transition:color .25s,border-color .25s;
-}
-.prod-tab.active,.prod-tab:hover{color:var(--gold);border-bottom-color:var(--gold)}
-.prod-panel{display:none}
-.prod-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.prod-panel{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:56px}
+.prod-panel:last-of-type{margin-bottom:0}
 .prod-card{
   display:flex;flex-direction:column;
   overflow:hidden;
@@ -514,12 +510,18 @@ img{transition:transform .4s ease, box-shadow .4s ease, filter .4s ease, opacity
   margin-top:18px;text-align:center;background:var(--gold);color:#fff;
   border-bottom:none;padding:14px;
 }
+#mobile-nav .mobile-nav-whatsapp{
+  margin-top:10px;text-align:center;background:#25D366;color:#fff;
+  border-bottom:none;padding:14px;display:flex;align-items:center;justify-content:center;gap:10px;
+}
+#mobile-nav .mobile-nav-whatsapp svg{fill:#fff;}
 #nav-scrim{
   display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:299;
 }
 #nav-scrim.open{display:block}
 
 @media(max-width:900px){
+  footer{display:none}
   #hero{grid-template-columns:1fr;padding-top:70px}
   .hero-right{height:55vw;position:relative;min-height:260px}
   .hero-left{padding:60px 24px 60px}
@@ -527,7 +529,23 @@ img{transition:transform .4s ease, box-shadow .4s ease, filter .4s ease, opacity
   .hero-logo-big{width:108px !important}
   .about-grid,.contact-wrap{grid-template-columns:1fr}
   .about-badge{bottom:-14px;left:14px}
-  .prod-panel.active,.svc-grid{grid-template-columns:1fr}
+
+  /* Compact accordion cards on mobile: About pillars */
+  .about-pillars{grid-template-columns:1fr}
+  .about-pillar{cursor:pointer;}
+  .about-pillar h4{position:relative;padding-right:22px;margin-bottom:0;}
+  .about-pillar h4::after{
+    content:'+';position:absolute;right:0;top:50%;transform:translateY(-50%);
+    font-family:var(--sans);font-size:1.2rem;font-weight:300;color:var(--gold);
+  }
+  .about-pillar.expanded h4::after{content:'−';}
+  .about-pillar.expanded h4{margin-bottom:8px;}
+  .about-pillar p{
+    max-height:0;overflow:hidden;opacity:0;
+    transition:max-height .35s ease,opacity .3s ease;
+  }
+  .about-pillar.expanded p{max-height:200px;opacity:1;}
+  .prod-panel,.svc-grid{grid-template-columns:1fr}
 
   /* Compact accordion cards on mobile: Services */
   .svc-card{padding:20px 22px;cursor:pointer;}
@@ -545,10 +563,23 @@ img{transition:transform .4s ease, box-shadow .4s ease, filter .4s ease, opacity
     margin-top:0;font-size:.85rem;
   }
   .svc-card.expanded .svc-body{max-height:200px;opacity:1;margin-top:14px;}
-  .fcs{grid-template-columns:1fr;border:none}
-  .fcs-nav{display:flex;overflow-x:auto}
-  .fc-btn{border-left:none;border-bottom:2px solid transparent;white-space:nowrap;flex-shrink:0}
-  .fc-btn.active{border-bottom-color:var(--gold);border-left:none}
+  .fcs{display:none}
+  .fc-accordion{display:block;border:1px solid var(--border);}
+  .fc-acc-item{border-bottom:1px solid var(--border);}
+  .fc-acc-item:last-child{border-bottom:none;}
+  .fc-acc-header{
+    width:100%;text-align:left;padding:20px 18px;background:var(--bg-cream);
+    border:none;cursor:pointer;display:flex;align-items:center;gap:14px;
+  }
+  .fc-acc-n{font-family:var(--serif);font-size:1.3rem;color:var(--gold-lt);line-height:1;}
+  .fc-acc-t{font-family:var(--caps);font-size:.72rem;letter-spacing:.14em;color:var(--ink);flex:1;}
+  .fc-acc-plus{font-size:1.4rem;font-weight:300;color:var(--gold);transition:transform .3s;line-height:1;}
+  .fc-acc-item.open .fc-acc-header{background:var(--bg-warm);}
+  .fc-acc-item.open .fc-acc-plus{transform:rotate(45deg);}
+  .fc-acc-body{max-height:0;overflow:hidden;transition:max-height .4s ease;background:var(--bg);}
+  .fc-acc-item.open .fc-acc-body{max-height:2400px;}
+  .fc-acc-body-inner{padding:20px 18px;}
+  .fc-acc-body-inner .fc-grid{grid-template-columns:1fr;}
   .fcs-content{padding:28px 20px}
   .fc-grid{grid-template-columns:1fr}
 
@@ -692,6 +723,10 @@ footer .ft-certs img {
   <a href="#knowledge">4Cs</a>
   <a href="#contact">Contact</a>
   <a href="#contact" class="mobile-nav-cta">Enquire Now</a>
+  <a href="https://wa.me/85251260601" target="_blank" rel="noopener noreferrer" class="mobile-nav-whatsapp">
+    <svg viewBox="0 0 32 32" width="18" height="18" fill="#25D366" xmlns="http://www.w3.org/2000/svg"><path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.217.6 4.29 1.65 6.077L4 29l8.1-1.626A11.9 11.9 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3zm0 21.818a9.77 9.77 0 0 1-4.98-1.362l-.357-.21-4.808.965.98-4.69-.232-.362A9.78 9.78 0 0 1 6.18 15c0-5.42 4.407-9.818 9.824-9.818 5.416 0 9.822 4.398 9.822 9.818 0 5.42-4.406 9.818-9.822 9.818zm5.4-7.36c-.296-.148-1.752-.865-2.024-.964-.272-.1-.47-.148-.668.148-.198.297-.767.964-.94 1.163-.173.198-.347.223-.643.075-.297-.149-1.254-.462-2.388-1.472-.883-.788-1.48-1.762-1.653-2.06-.173-.297-.019-.457.13-.605.134-.133.297-.347.446-.52.148-.174.198-.297.297-.495.099-.198.05-.372-.025-.52-.074-.149-.667-1.61-.915-2.204-.24-.577-.484-.5-.667-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.075-.792.372-.272.297-1.04 1.017-1.04 2.48 0 1.463 1.065 2.877 1.213 3.075.148.198 2.096 3.2 5.08 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.873.118.571-.085 1.752-.716 2-1.408.247-.693.247-1.286.173-1.408-.074-.123-.272-.198-.568-.347z"/></svg>
+    WhatsApp Us
+  </a>
 </div>
 <div id="nav-scrim"></div>
 
@@ -803,12 +838,9 @@ footer .ft-certs img {
       <p class="section-eyebrow">What We Offer</p>
       <h2 class="section-h2">Polished Diamonds, <em>Every Shape</em></h2>
     </div>
-    <div class="prod-tabs">
-      <button class="prod-tab active" data-tab="cert">Certified Stones</button>
-      <button class="prod-tab" data-tab="loose">Loose Parcels</button>
-    </div>
+    <h3 class="prod-subheading">Certified Stones</h3>
     <!-- Certified -->
-    <div id="tab-cert" class="prod-panel active">
+    <div id="tab-cert" class="prod-panel">
       <div class="prod-card white-bg">
         <div class="prod-img">
           <img src="img_round_color.jpg" alt="Diamond colour grading D to M – colourless to faint">
@@ -851,6 +883,7 @@ footer .ft-certs img {
       </div>
     </div>
     <!-- Loose Parcels -->
+    <h3 class="prod-subheading">Loose Parcels</h3>
     <div id="tab-loose" class="prod-panel">
       <div class="prod-card white-bg contain-img">
         <div class="prod-img">
@@ -1004,6 +1037,7 @@ footer .ft-certs img {
         </div>
       </div>
     </div>
+    <div class="fc-accordion" id="fc-accordion"></div>
   </div>
 </section>
 
@@ -1138,13 +1172,6 @@ footer .ft-certs img {
 const nav=document.getElementById('nav');
 window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>70));
 
-// Product tabs
-document.querySelectorAll('.prod-tab').forEach(t=>t.addEventListener('click',()=>{
-  document.querySelectorAll('.prod-tab').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.prod-panel').forEach(x=>x.classList.remove('active'));
-  t.classList.add('active');
-  document.getElementById('tab-'+t.dataset.tab).classList.add('active');
-}));
 
 // 4Cs tabs
 document.querySelectorAll('.fc-btn').forEach(b=>b.addEventListener('click',()=>{
@@ -1164,6 +1191,38 @@ document.querySelectorAll('.fc-item').forEach(function(item){
     item.classList.toggle('expanded');
   });
 });
+document.querySelectorAll('.about-pillar').forEach(function(item){
+  item.addEventListener('click', function(){ item.classList.toggle('expanded'); });
+});
+
+// Build mobile accordion for 4Cs/5Cs from existing tab content (no content duplication)
+(function(){
+  var wrap = document.getElementById('fc-accordion');
+  var buttons = document.querySelectorAll('.fc-btn');
+  if(!wrap || !buttons.length) return;
+  buttons.forEach(function(btn){
+    var key = btn.dataset.fc;
+    var panel = document.getElementById('fc-'+key);
+    if(!panel) return;
+    var n = btn.querySelector('.fc-btn-n').textContent;
+    var t = btn.querySelector('.fc-btn-t').textContent;
+    var item = document.createElement('div');
+    item.className = 'fc-acc-item';
+    item.innerHTML =
+      '<button class="fc-acc-header" type="button">' +
+        '<span class="fc-acc-n">'+n+'</span>' +
+        '<span class="fc-acc-t">'+t+'</span>' +
+        '<span class="fc-acc-plus">+</span>' +
+      '</button>' +
+      '<div class="fc-acc-body"><div class="fc-acc-body-inner">'+panel.innerHTML+'</div></div>';
+    wrap.appendChild(item);
+  });
+  wrap.querySelectorAll('.fc-acc-header').forEach(function(header){
+    header.addEventListener('click', function(){
+      header.parentElement.classList.toggle('open');
+    });
+  });
+})();
 
 // Mobile nav toggle
 (function(){
@@ -1212,8 +1271,8 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
 </script>
 
-<a href="https://wa.me/85251260601" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp"
-  style="position:fixed;bottom:24px;right:24px;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,0.3);z-index:999999;text-decoration:none;transition:transform .2s;"
+<a href="https://wa.me/85251260601" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp" id="wa-float-btn"
+  style="position:fixed;bottom:24px;right:24px;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,0.3);z-index:2147483000;text-decoration:none;transition:transform .2s;"
   onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
   <svg viewBox="0 0 32 32" width="30" height="30" fill="#ffffff" xmlns="http://www.w3.org/2000/svg"><path d="M16.004 3C9.377 3 4 8.373 4 15c0 2.217.6 4.29 1.65 6.077L4 29l8.1-1.626A11.9 11.9 0 0 0 16.004 27C22.63 27 28 21.627 28 15S22.63 3 16.004 3zm0 21.818a9.77 9.77 0 0 1-4.98-1.362l-.357-.21-4.808.965.98-4.69-.232-.362A9.78 9.78 0 0 1 6.18 15c0-5.42 4.407-9.818 9.824-9.818 5.416 0 9.822 4.398 9.822 9.818 0 5.42-4.406 9.818-9.822 9.818zm5.4-7.36c-.296-.148-1.752-.865-2.024-.964-.272-.1-.47-.148-.668.148-.198.297-.767.964-.94 1.163-.173.198-.347.223-.643.075-.297-.149-1.254-.462-2.388-1.472-.883-.788-1.48-1.762-1.653-2.06-.173-.297-.019-.457.13-.605.134-.133.297-.347.446-.52.148-.174.198-.297.297-.495.099-.198.05-.372-.025-.52-.074-.149-.667-1.61-.915-2.204-.24-.577-.484-.5-.667-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.075-.792.372-.272.297-1.04 1.017-1.04 2.48 0 1.463 1.065 2.877 1.213 3.075.148.198 2.096 3.2 5.08 4.487.71.306 1.263.489 1.694.626.712.226 1.36.194 1.873.118.571-.085 1.752-.716 2-1.408.247-.693.247-1.286.173-1.408-.074-.123-.272-.198-.568-.347z"/></svg>
 </a>
